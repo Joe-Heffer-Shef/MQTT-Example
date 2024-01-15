@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MQTT-Example\MQTT-Example.csproj" />
+    <ProjectReference Include="..\MQTT-Example\MqttExample.csproj" />
   </ItemGroup>
 
 </Project>
