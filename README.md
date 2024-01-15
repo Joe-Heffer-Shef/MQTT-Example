@@ -4,5 +4,5 @@ This repository contains a Visual Studio project ("Solution") that is used to te
 
 # Installation
 
-1. Install Visual Studio and C# SDK
+1. Install Visual Studio 2022 and .NET Core version 8 (C# SDK)
 2. [Install MQTTnet](https://github.com/dotnet/MQTTnet?tab=readme-ov-file#getting-started) via NuGet
