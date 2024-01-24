@@ -14,44 +14,53 @@ namespace MqttExample.MQTT
 {
     public class MqttService
     {
-        private readonly string Url;
+        public string Url => $"mqtt://{Domain}:{Port}";
         private readonly string Domain;
         private readonly int Port;
-        private readonly IManagedMqttClient Client;
-        private readonly ManagedMqttClientOptions Options;
+        public IManagedMqttClient Client;
 
         public MqttService(string domain, int port = 1883)
         {
-            Domain = domain;
-            Port = port;
-            // Build URI
-            Url = $"mqtt://{Domain}:{Port}";
-
-            Client = CreateClient()
-
-            // TODO fix this mess
+            // Constructor
+            this.Domain = domain;
+            this.Port = port;
+            this.Client = this.CreateClient();
         }
-        static IManagedMqttClient CreateClient(string domain, int port)
+        /// <summary>
+        /// Create a managed MQTT client
+        /// </summary>
+        /// <returns>MQTT client</returns>
+        public IManagedMqttClient CreateClient()
         {
+            // https://github.com/dotnet/MQTTnet/blob/master/Samples/ManagedClient/Managed_Client_Simple_Samples.cs
             var mqttFactory = new MqttFactory();
             var client = mqttFactory.CreateManagedMqttClient();
+
+            return client;
+        }
+        /// <summary>
+        /// Specify the options for the MQTT client.
+        /// </summary>
+        /// <returns>MQTT options</returns>
+        public ManagedMqttClientOptions MqttClientOptions()
+        {
             var mqttClientOptions = new MqttClientOptionsBuilder()
-                .WithTcpServer(domain, port)
+                .WithTcpServer(this.Domain, this.Port)
                 .Build();
 
             var Options = new ManagedMqttClientOptionsBuilder()
                 .WithClientOptions(mqttClientOptions)
                 .Build();
 
-            return client;
+            return Options;
         }
         public void Connect(bool debug = false)
         {
-            Client.StartAsync(managedMqttClientOptions);
+            this.Client.StartAsync(this.MqttClientOptions());
         }
         public void Disconnect(bool debug = false)
         {
-            throw new NotImplementedException();
+            this.Client.StopAsync();
         }
         //bool CreateBinder<TMessage>(string topic, BindMode bindMode, out ChannelBinder channelBinder) where TMessage : Message, new()
         //{
