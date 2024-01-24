@@ -6,10 +6,10 @@ namespace MqttUnitTests
     public class MqttServiceTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMqttConnect()
         {
-            MqttService ms = new MqttService("broker.hivemq.com");
-            ms.Connect();
+            MqttService mqtt_service = new MqttService("broker.hivemq.com");
+            mqtt_service.Connect();
         }
     }
 }
